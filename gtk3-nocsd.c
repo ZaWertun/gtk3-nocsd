@@ -261,9 +261,6 @@ RUNTIME_IMPORT_FUNCTION(0, GTK_LIBRARY, gtk_window_set_titlebar, void, (GtkWindo
 RUNTIME_IMPORT_FUNCTION(0, GTK_LIBRARY, gtk_header_bar_set_show_close_button, void, (GtkHeaderBar *bar, gboolean setting), (bar, setting))
 RUNTIME_IMPORT_FUNCTION(0, GTK_LIBRARY, gtk_header_bar_set_decoration_layout, void, (GtkHeaderBar *bar, const gchar *layout), (bar, layout))
 RUNTIME_IMPORT_FUNCTION(0, GTK_LIBRARY, gtk_header_bar_get_decoration_layout, const gchar *, (GtkHeaderBar *bar), (bar))
-
-RUNTIME_IMPORT_FUNCTION(0, GTK_LIBRARY, gtk_header_bar_set_title, void, (GtkHeaderBar *bar, const gchar *title), (bar, title))
-
 RUNTIME_IMPORT_FUNCTION(0, GTK_LIBRARY, gtk_style_context_add_class, void, (GtkStyleContext *context, const gchar *class_name), (context, class_name))
 RUNTIME_IMPORT_FUNCTION(0, GTK_LIBRARY, gtk_style_context_remove_class, void, (GtkStyleContext *context, const gchar *class_name), (context, class_name))
 RUNTIME_IMPORT_FUNCTION(0, GTK_LIBRARY, gtk_style_context_add_provider_for_screen, void, (GdkScreen *screen, GtkStyleProvider *provider, guint priority), (screen, provider, priority))
@@ -331,9 +328,6 @@ RUNTIME_IMPORT_FUNCTION(0, GIREPOSITORY_LIBRARY, g_function_info_prep_invoker, g
 #define orig_gtk_header_bar_set_show_close_button        rtlookup_gtk_header_bar_set_show_close_button
 #define orig_gtk_header_bar_set_decoration_layout        rtlookup_gtk_header_bar_set_decoration_layout
 #define orig_gtk_header_bar_get_decoration_layout        rtlookup_gtk_header_bar_get_decoration_layout
-
-#define orig_gtk_header_bar_set_title                    rtlookup_gtk_header_bar_set_title
-
 #define gtk_style_context_add_class                      rtlookup_gtk_style_context_add_class
 #define gtk_style_context_remove_class                   rtlookup_gtk_style_context_remove_class
 #define gtk_style_context_add_provider_for_screen        rtlookup_gtk_style_context_add_provider_for_screen
@@ -548,6 +542,9 @@ static GtkStyleProvider *get_custom_css_provider ()
      * <https://www.w3.org/TR/selectors/#specificity> for details.
      */
     static const char *custom_css =
+      "label.title {\n"
+      "opacity: 0;\n"
+      "}\n"
       "window > .titlebar:not(headerbar) {\n"
       "  padding: 0;\n"
       "  border-style: none;\n"
@@ -1466,11 +1463,4 @@ static gtk3_nocsd_tls_data_t *tls_data_location()
   }
 
   return (gtk3_nocsd_tls_data_t *) ptr;
-}
-
-// NOTE: functions by toluschr here
-
-void gtk_header_bar_set_title (GtkHeaderBar *bar, const gchar *title) {
-	if (is_compatible_gtk_version() && !are_csd_disabled())
-        orig_gtk_header_bar_set_title(bar, title);
 }

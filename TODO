@@ -4,9 +4,6 @@ gtk3-nocsd TODO
  - Investigate whether we should force gtk-dialogs-use-header to FALSE
    (the current default in non-GNOME environments) or not.
 
- - Potentially remove title from header bar (redundant, but might make
-   header bar look too empty).
-
  - Hide header bar if it were to contain only the title.
 
  - Split source code into multiple files.
