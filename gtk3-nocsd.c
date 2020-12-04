@@ -39,6 +39,11 @@
 
 #include <gobject/gvaluecollector.h>
 
+#ifdef __FreeBSD__
+#include <sys/elf_generic.h>
+#define ElfW(t) Elf##_##t
+#endif
+
 #ifdef G_TYPE_INSTANCE_GET_PRIVATE
 #   undef G_TYPE_INSTANCE_GET_PRIVATE
 #endif
